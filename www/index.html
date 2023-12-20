@@ -13,6 +13,7 @@
         let ncmb = new NCMB(appKey, clientKey);
         let UTdata = ncmb.DataStore("UpdateTest");
         let key = "score";
+        var x=true;
 
         function enterData() {
             let uTdata = new UTdata();
@@ -51,6 +52,7 @@
         }
 
         function sortData() {
+            if(x==true){
             UTdata.order(key,true).fetchAll()
                 .then(function(results) {
                     let msg = "";
@@ -67,7 +69,8 @@
                     $("#display").addClass("bg-warning");
                     $("#display").html("delete fail:" + JSON.stringify(error));
                 })
-
+                x=false;
+            }else {
             UTdata.order(key,false).fetchAll()
                 .then(function(results) {
                     let msg = "";
@@ -84,10 +87,11 @@
                     $("#display").addClass("bg-warning");
                     $("#display").html("delete fail:" + JSON.stringify(error));
                 })
+                x=true;
+            }
         }
 
-        function sortData(){
-        }
+        
 
         function countData() {
             UTdata.count().fetchAll()
