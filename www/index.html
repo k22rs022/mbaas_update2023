@@ -14,6 +14,7 @@
         let UTdata = ncmb.DataStore("UpdateTest");
         let key = "score";
         var x=true;
+        var y;
 
         function enterData() {
             let uTdata = new UTdata();
@@ -91,8 +92,6 @@
             }
         }
 
-        
-
         function countData() {
             UTdata.count().fetchAll()
                 .then(function(results) {
@@ -107,6 +106,32 @@
                     $("#display").html("count fail:" + JSON.stringify(error));
                 })
         }
+
+        function FilterData(){
+            UTdata
+            .fetchAll()
+            .then(function(results) {
+                    let msg = "";
+                    console.log(results);
+                    for (let i = 0; i < results.length;i++) {
+                       // msg += results[i].get(key)+" ";
+                        if(results[i].get(key)%2==0){
+                            msg +=  results[i].get(key) + " ";
+                            x=false;
+                        }
+                    }
+                    $("#display").removeClass();
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-succes");
+                    $("#display").html(msg);
+                })
+                .catch(function(error) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("count fail:" + JSON.stringify(error));
+                })
+         }
+        
 
         function deleteData() {
             UTdata.fetch()
@@ -123,9 +148,6 @@
                     $("#display").addClass("bg-warning");
                     $("#display").html("delete fail:" + JSON.stringify(error));
                 })
-        }
-
-        function FilterData(){
         }
 
         function updateData() {
@@ -161,6 +183,7 @@
         <a onclick="countData()" class="btn btn-secondary" role="button">Count</a>
         <a onclick="deleteData()" class="btn btn-info" role="button">Delete</a>
         <a onclick="FilterData()" class="btn btn-primary btn-lg" role="button">Filter</a>
+
     </div>
     <div>
         <input type="text" id="update" placeholder="更新">
