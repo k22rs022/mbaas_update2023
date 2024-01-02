@@ -192,6 +192,25 @@
                     $("#display").html("update fail:" + JSON.stringify(error));
                 })
         }
+
+        function numData(){
+            UTdata.order(key,true).fetchAll()
+                .then(function(results) {
+                    let msg = 0;
+                    for (let i = 0; i < results.length; i++) {
+                        msg += results[i].get(key) ;
+                    }
+                    $("#display").removeClass();
+                    $("#display").addClass("text-light");
+                    $("#display").addClass("bg-primary");
+                    $("#display").html(msg);
+                })
+                .catch(function(error) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("delete fail:" + JSON.stringify(error));
+                })
+        }
     </script>
 </head>
 
@@ -207,7 +226,7 @@
         <a onclick="countData()" class="btn btn-secondary" role="button">Count</a>
         <a onclick="deleteData()" class="btn btn-info" role="button">Delete</a>
         <a onclick="FilterData()" class="btn btn-primary btn-lg" role="button">Filter</a>
-
+        <a onclick="numData()" class="btn btn-info btn-lg" role="button">Num</a>
     </div>
     <div>
         <input type="text" id="update" placeholder="更新">
