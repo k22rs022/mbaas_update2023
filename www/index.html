@@ -107,31 +107,55 @@
                 })
         }
 
-        function FilterData(){
+     function FilterData(){
+        if(x==true){
             UTdata
             .fetchAll()
             .then(function(results) {
-                    let msg = "";
-                    console.log(results);
-                    for (let i = 0; i < results.length;i++) {
-                       // msg += results[i].get(key)+" ";
-                        if(results[i].get(key)%2==0){
-                            msg +=  results[i].get(key) + " ";
-                            x=false;
-                        }
+                let msg = "";
+                console.log(results);
+                for (let i = 0; i < results.length;i++) {
+                    // msg += results[i].get(key)+" ";
+                    if(results[i].get(key)%2==0){
+                        msg +=  results[i].get(key)+" " ;
                     }
-                    $("#display").removeClass();
-                    $("#display").removeClass();
-                    $("#display").addClass("bg-succes");
-                    $("#display").html(msg);
-                })
+                }
+                $("#display").removeClass();
+                $("#display").removeClass();
+                $("#display").addClass("bg-succes");
+                $("#display").html(msg);
+            })
+            .catch(function(error) {
+                $("#display").removeClass();
+                $("#display").addClass("bg-warning");
+                $("#display").html("count fail:" + JSON.stringify(error));
+            })
+            x=false;
+        }else{
+            UTdata
+            .fetchAll()
+            .then(function(results) {
+                let msg = "";
+                console.log(results);
+                for (let i = 0; i < results.length;i++) {
+                    // msg += results[i].get(key)+" ";
+                    if(results[i].get(key)%2!=0){
+                        msg +=  results[i].get(key)+" " ;
+                    }
+                }
+                $("#display").removeClass();
+                $("#display").removeClass();
+                $("#display").addClass("bg-succes");
+                $("#display").html(msg);
+            })
                 .catch(function(error) {
-                    $("#display").removeClass();
-                    $("#display").addClass("bg-warning");
-                    $("#display").html("count fail:" + JSON.stringify(error));
-                })
+                $("#display").removeClass();
+                $("#display").addClass("bg-warning");
+                $("#display").html("count fail:" + JSON.stringify(error));
+            })
+            x=true;
+            }
          }
-        
 
         function deleteData() {
             UTdata.fetch()
